@@ -7,6 +7,11 @@ import Attempts from './Attempts.tsx'
 import Help from './Help.tsx'
 import Search from './Search.tsx'
 
+const TEST_MUSIC = {
+    id: 389,
+    url: 'https://soundcloud.com/widoyod332/resilience-of-the-expedition-society'
+}
+
 const Content = () => {
     const [isFinished, setIsFinished] = React.useState<boolean>(false)
 
@@ -16,7 +21,7 @@ const Content = () => {
                 <Answer />
                 <Share />
                 <TimerToNext />
-                <AudioPlayer />
+                <AudioPlayer music={TEST_MUSIC}/>
             </>
         )
     }
@@ -25,7 +30,7 @@ const Content = () => {
         <>
             <Attempts />
             <Help />
-            <AudioPlayer />
+            <AudioPlayer music={TEST_MUSIC}/>
             <Search />
         </>
     )
