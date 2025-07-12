@@ -8,16 +8,17 @@ type Props = {
 const AudioPlayer = ({ music }: Props) => {
 	const [isScReady, setIsScReady] = React.useState<boolean>(false)
 	const [isPlaying, setIsPlaying] = React.useState<boolean>(false)
+	const [soundDuration, setSoundDuration] = React.useState<number>(0)
+	const [soundPosition, setSoundPosition] = React.useState<number>(0)
 
 	const scIframe = React.useRef<HTMLIFrameElement>(null)
 
 	const onReady = () => {
-		// TODO autre chose ?
 		setIsScReady(true)
 	}
 
-	const onPlayProgress = () => {
-		// TODO mettre à jour l'avancement de la barre
+	const onPlayProgress = ({ currentPosition }: { currentPosition: number }) => {
+		setSoundPosition(currentPosition)
 	}
 
 	const onFinish = () => {
@@ -36,32 +37,58 @@ const AudioPlayer = ({ music }: Props) => {
 		scWidget.bind(window.SC.Widget.Events.READY, onReady)
 		scWidget.bind(window.SC.Widget.Events.PLAY_PROGRESS, onPlayProgress)
 		scWidget.bind(window.SC.Widget.Events.FINISH, onFinish)
+
 	}, [])
 
-	const togglePlay = () => {
+	React.useEffect(() => {
+		if (isScReady) {
+			const scWidget = window.SC.Widget(scIframe.current)
+
+			// init
+			scWidget.getDuration((duration : number) => { setSoundDuration(duration) })
+		}
+	}, [isScReady])
+
+	const startMusic = () => {
 		const scWidget = window.SC.Widget(scIframe.current)
 
+		setIsPlaying(true)
+		scWidget.play()
+	}
+
+	const stopMusic = () => {
+		const scWidget = window.SC.Widget(scIframe.current)
+
+		setIsPlaying(false)
+		scWidget.pause()
+		scWidget.seekTo(0)
+	}
+
+	const toggleMusic = () => {
 		if (isPlaying) {
-			setIsPlaying(false)
-			scWidget.pause()
-			scWidget.seekTo(0)
+			stopMusic()
 		} else {
-			setIsPlaying(true)
-			scWidget.play()
+			startMusic()
 		}
 	}
 
 	return (
-		<div>
-			TODO control audio player
-			<button onClick={togglePlay}>play</button>
+		<>
 			<iframe // TODO hide
 				name={`${music.id}`}
 				ref={scIframe}
 				allow="autoplay"
 				src={`https://w.soundcloud.com/player/?url=${music.url}&cache=${music.id}`}
 			/>
-		</div>
+			{isScReady ? (
+				<div>
+					{soundPosition} / {soundDuration}
+					<button onClick={toggleMusic}>play</button>
+				</div>
+			) : (
+				<>loading</>
+			)}
+		</>
 	)
 }
 
