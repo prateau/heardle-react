@@ -4,7 +4,6 @@ import Share from './Share.tsx'
 import TimerToNext from './TimerToNext.tsx'
 import AudioPlayer from './AudioPlayer.tsx'
 import Attempts from './Attempts.tsx'
-import Help from './Help.tsx'
 import Search from './Search.tsx'
 
 const TEST_MUSIC = {
@@ -29,7 +28,6 @@ const Content = () => {
     return (
         <>
             <Attempts />
-            <Help />
             <AudioPlayer music={TEST_MUSIC}/>
             <Search />
         </>

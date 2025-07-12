@@ -2,10 +2,12 @@ import * as React from 'react'
 import type { MusicElement } from '../config/types.ts'
 
 type Props = {
+	isFinished: boolean,
 	music: MusicElement
 }
 
-const AudioPlayer = ({ music }: Props) => {
+const AudioPlayer = ({ isFinished, music }: Props) => {
+	const [showHelp, setShowHelp] = React.useState<boolean>(true)
 	const [isScReady, setIsScReady] = React.useState<boolean>(false)
 	const [isPlaying, setIsPlaying] = React.useState<boolean>(false)
 	const [soundDuration, setSoundDuration] = React.useState<number>(0)
@@ -52,6 +54,7 @@ const AudioPlayer = ({ music }: Props) => {
 	const startMusic = () => {
 		const scWidget = window.SC.Widget(scIframe.current)
 
+		setShowHelp(false)
 		setIsPlaying(true)
 		scWidget.play()
 	}
@@ -82,6 +85,7 @@ const AudioPlayer = ({ music }: Props) => {
 			/>
 			{isScReady ? (
 				<div>
+					{!isFinished && showHelp && <div>TODO Help</div>}
 					{soundPosition} / {soundDuration}
 					<button onClick={toggleMusic}>play</button>
 				</div>
