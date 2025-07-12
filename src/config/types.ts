@@ -1,6 +1,12 @@
 export type MusicElement = {
 	id: number,
-	url: string
+	url: string,
+	name: {
+		[langKey: string]: string
+	},
+	category: {
+		[langKey: string]: string
+	}
 }
 
 // For soundcloud widget API

@@ -1,12 +1,13 @@
 import * as React from 'react'
-import type { MusicElement } from '../config/types.ts'
+import { useHeardleContext } from '../context/HeardleContext.tsx'
 
 type Props = {
-	isFinished: boolean,
-	music: MusicElement
+	isFinished: boolean
 }
 
-const AudioPlayer = ({ isFinished, music }: Props) => {
+const AudioPlayer = ({ isFinished }: Props) => {
+	const { currentMusic } = useHeardleContext()
+
 	const [showHelp, setShowHelp] = React.useState<boolean>(true)
 	const [isScReady, setIsScReady] = React.useState<boolean>(false)
 	const [isPlaying, setIsPlaying] = React.useState<boolean>(false)
@@ -78,10 +79,10 @@ const AudioPlayer = ({ isFinished, music }: Props) => {
 	return (
 		<>
 			<iframe // TODO hide
-				name={`${music.id}`}
+				name={`${currentMusic.id}`}
 				ref={scIframe}
 				allow="autoplay"
-				src={`https://w.soundcloud.com/player/?url=${music.url}&cache=${music.id}`}
+				src={`https://w.soundcloud.com/player/?url=${currentMusic.url}`}
 			/>
 			{isScReady ? (
 				<div>

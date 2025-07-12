@@ -1,0 +1,38 @@
+[
+  {
+    "id": 0,
+    "url": "https://soundcloud.com/sdiatc/opening-title-screen-pokemon",
+    "name": {
+      "en": "Pokemon Rescue Team Theme",
+      "fr": "Pokémon Équipe de secours – Thème"
+    },
+    "category": {
+      "en": "Blue / Red Rescue Team",
+      "fr": "Équipe de Secours Rouge / Bleue"
+    }
+  },
+  {
+    "id": 1,
+    "url": "https://soundcloud.com/sdiatc/main-menu-pokemon-mystery",
+    "name": {
+      "en": "Top Menu",
+      "fr": "Menu principal"
+    },
+    "category": {
+      "en": "Blue / Red Rescue Team",
+      "fr": "Équipe de Secours Rouge / Bleue"
+    }
+  },
+  {
+    "id": 2,
+    "url": "https://soundcloud.com/sdiatc/personality-test-pokemon",
+    "name": {
+      "en": "In a Dream",
+      "fr": "Dans un rêve"
+    },
+    "category": {
+      "en": "Blue / Red Rescue Team",
+      "fr": "Équipe de Secours Rouge / Bleue"
+    }
+  }
+]
