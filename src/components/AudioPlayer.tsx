@@ -2,7 +2,7 @@ import * as React from 'react'
 import { useHeardleContext } from '../context/HeardleContext.tsx'
 
 type Props = {
-	isFinished: boolean
+	isFinished?: boolean
 }
 
 const AudioPlayer = ({ isFinished }: Props) => {

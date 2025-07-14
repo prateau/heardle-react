@@ -9,6 +9,11 @@ export type MusicElement = {
 	}
 }
 
+export type GameState = {
+	isFinished: boolean,
+	attempts: (number | undefined)[]
+}
+
 // For soundcloud widget API
 declare global {
 	interface Window {

@@ -1,26 +1,21 @@
-import * as React from 'react'
 import Answer from './Answer.tsx'
 import Share from './Share.tsx'
 import TimerToNext from './TimerToNext.tsx'
 import AudioPlayer from './AudioPlayer.tsx'
 import Attempts from './Attempts.tsx'
 import Search from './Search.tsx'
-
-const TEST_MUSIC = {
-    id: 389,
-    url: 'https://soundcloud.com/widoyod332/resilience-of-the-expedition-society'
-}
+import { useHeardleContext } from '../context/HeardleContext.tsx'
 
 const Content = () => {
-    const [isFinished, setIsFinished] = React.useState<boolean>(false)
+    const { gameState } = useHeardleContext()
 
-    if (isFinished) {
+    if (gameState.isFinished) {
         return (
             <>
                 <Answer />
                 <Share />
                 <TimerToNext />
-                <AudioPlayer music={TEST_MUSIC}/>
+                <AudioPlayer isFinished/>
             </>
         )
     }
@@ -28,7 +23,7 @@ const Content = () => {
     return (
         <>
             <Attempts />
-            <AudioPlayer music={TEST_MUSIC}/>
+            <AudioPlayer />
             <Search />
         </>
     )
