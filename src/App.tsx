@@ -5,14 +5,14 @@ import HeardleContext from './context/HeardleContext.tsx'
 
 const App = () => {
 
-  return (
-      <HeardleContext>
-          <main>
-              <Header />
-              <Content />
-          </main>
-    </HeardleContext>
-  )
+    return (
+        <HeardleContext>
+            <main>
+                <Header />
+                <Content />
+            </main>
+        </HeardleContext>
+    )
 }
 
 export default App

@@ -1,7 +1,7 @@
 import React from 'react'
 import musics from '../config/musics.json'
 import type { GameState, MusicElement } from '../config/types.ts'
-import { getTodaySong } from '../config/seededRng.ts'
+import { getTodaySong } from './seededRng.ts'
 import { HEARDLE_SPLITS } from '../config/consts.ts'
 
 export interface HeardleContextProps {
