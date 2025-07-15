@@ -8,7 +8,7 @@ export interface HeardleContextProps {
 	currentMusic: MusicElement,
 	allMusics: MusicElement[],
 	gameState: GameState,
-	guessMusic: (musicId: number) => void
+	guessMusic: (musicId?: number) => void
 }
 
 const Context = React.createContext<HeardleContextProps>({} as HeardleContextProps)
