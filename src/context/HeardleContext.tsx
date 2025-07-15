@@ -3,6 +3,7 @@ import musics from '../config/musics.json'
 import type { GameState, MusicElement } from '../config/types.ts'
 import { getTodaySong } from './seededRng.ts'
 import { HEARDLE_SPLITS } from '../config/consts.ts'
+import { sortMusicById } from '../config/utils.ts'
 
 export interface HeardleContextProps {
 	currentMusic: MusicElement,
@@ -23,7 +24,7 @@ const BASE_GAME_STATE = {
 const HeardleContext = ({ children }: React.PropsWithChildren) => {
 	const [gameState, setGameState] = React.useState<GameState>(BASE_GAME_STATE)
 
-	const allMusics = musics as MusicElement[]
+	const allMusics = (musics as MusicElement[]).sort(sortMusicById)
 	const currentMusic = getTodaySong(allMusics)
 
 	const guessMusic = (musicId?: number) => {
