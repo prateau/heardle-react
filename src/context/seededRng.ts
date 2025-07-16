@@ -9,17 +9,17 @@ const mulberry32 = (step: number): number => {
 	return ((t ^ (t >>> 14)) >>> 0) / 4294967296
 }
 
-const getDiffFromToday = (): number => {
+const getDiffFromToday = (today: string): number => {
+	const todayDate = new Date(today)
 	const startDate = new Date(START_DATE)
-	const today = new Date()
 
-	const diffInMilliseconds = today.getTime() - startDate.getTime()
+	const diffInMilliseconds = todayDate.getTime() - startDate.getTime()
 	return Math.round(diffInMilliseconds / (1000 * 60 * 60 * 24))
 }
 
 // array shuffling with Fisher–Yates Shuffle
-const shuffleArray = <T> (array: T[]): T[] => {
-	const baseRngStep = Math.floor(getDiffFromToday() / array.length)
+const shuffleArray = <T> (array: T[], songNumber: number): T[] => {
+	const baseRngStep = Math.floor(songNumber / array.length)
 	let i = array.length, j = 0
 	let temp
 	while (i--) {
@@ -35,6 +35,7 @@ const shuffleArray = <T> (array: T[]): T[] => {
 	return array
 }
 
-export const getTodaySong = <T> (array: T[]): T => (
-	shuffleArray(array)[getDiffFromToday() % array.length]
-)
+export const getTodaySong = <T> (array: T[], today: string): T => {
+	const songNumber = getDiffFromToday(today)
+	return shuffleArray(array, songNumber)[songNumber % array.length]
+}

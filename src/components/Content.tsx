@@ -5,11 +5,15 @@ import AudioPlayer from './AudioPlayer.tsx'
 import AttemptList from './attempts/AttemptList.tsx'
 import Search from './Search.tsx'
 import { useHeardleContext } from '../context/HeardleContext.tsx'
+import { HEARDLE_SPLITS } from '../config/consts.ts'
 
 const Content = () => {
     const { gameState } = useHeardleContext()
 
-    if (gameState.isFinished) {
+    const isWon = gameState.attempts.some(musicId => musicId === gameState.response)
+    const isFinished = isWon || gameState.attempts.length >= HEARDLE_SPLITS.length
+
+    if (isFinished) {
         return (
             <>
                 <Answer />

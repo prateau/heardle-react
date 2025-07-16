@@ -10,7 +10,8 @@ export type MusicElement = {
 }
 
 export type GameState = {
-	isFinished: boolean,
+	date: string,
+	response: number,
 	attempts: (number | undefined)[]
 }
 

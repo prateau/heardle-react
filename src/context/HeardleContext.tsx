@@ -2,8 +2,7 @@ import React from 'react'
 import musics from '../config/musics.json'
 import type { GameState, MusicElement } from '../config/types.ts'
 import { getTodaySong } from './seededRng.ts'
-import { HEARDLE_SPLITS } from '../config/consts.ts'
-import { sortMusicById } from '../config/utils.ts'
+import { getGameStateDay, getToday, saveGameState, sortMusicById } from '../config/utils.ts'
 
 export interface HeardleContextProps {
 	currentMusic: MusicElement,
@@ -16,22 +15,32 @@ const Context = React.createContext<HeardleContextProps>({} as HeardleContextPro
 
 export const useHeardleContext = () => React.useContext(Context)
 
-const BASE_GAME_STATE = {
-	isFinished: false,
-	attempts: []
-}
-
 const HeardleContext = ({ children }: React.PropsWithChildren) => {
-	const [gameState, setGameState] = React.useState<GameState>(BASE_GAME_STATE)
+	const [gameState, setGameState] = React.useState<GameState>()
 
+	const today = getToday()
 	const allMusics = (musics as MusicElement[]).sort(sortMusicById)
-	const currentMusic = getTodaySong(allMusics)
+	const currentMusic = getTodaySong(allMusics, today)
+
+	React.useEffect(() => {
+		setGameState(getGameStateDay(today) || { date: today, response: currentMusic.id, attempts: [] })
+	}, [])
+
+	React.useEffect(() => {
+		if (gameState != undefined) {
+			saveGameState(gameState)
+		}
+	}, [gameState])
 
 	const guessMusic = (musicId?: number) => {
 		setGameState(old => ({
-			attempts: [...old.attempts, musicId],
-			isFinished: (musicId === currentMusic.id || old.attempts.length + 1 >= HEARDLE_SPLITS.length)
+			...old!,
+			attempts: [...old!.attempts, musicId]
 		}))
+	}
+
+	if (!gameState) {
+		return null
 	}
 
 	return (
