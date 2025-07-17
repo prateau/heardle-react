@@ -1,0 +1,8 @@
+.empty-attempt {
+    height: 40px;
+    border: 1px solid #444444;
+}
+
+.empty-attempt--current {
+    border-color: #888888;
+}

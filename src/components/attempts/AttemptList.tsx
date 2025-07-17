@@ -1,3 +1,4 @@
+import './AttemptList.css'
 import { useHeardleContext } from '../../context/HeardleContext.tsx'
 import Attempt from './Attempt.tsx'
 import { HEARDLE_SPLITS } from '../../config/consts.ts'
@@ -9,11 +10,11 @@ const AttemptList = () => {
 	const nbEmptyAttemps = HEARDLE_SPLITS.length - gameState.attempts.length
 
 	return (
-		<div>
+		<div className='attempt-list'>
 			{gameState.attempts.map(id => (
 				<Attempt musicId={id} />
 			))}
-			{[...Array(nbEmptyAttemps)].map(() => <EmptyAttempt />)}
+			{[...Array(nbEmptyAttemps)].map((_, index) => <EmptyAttempt current={index === 0} />)}
 		</div>
 	)
 }
