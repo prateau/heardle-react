@@ -6,7 +6,7 @@ type Props = {
 }
 
 const Attempt = ({ musicId } : Props) => {
-	const { i18n : { language } } = useTranslation()
+	const { i18n : { language }, t } = useTranslation()
 	const { allMusics } = useHeardleContext()
 
 	const selectedMusic = allMusics.find(music => music.id === musicId)
@@ -19,7 +19,7 @@ const Attempt = ({ musicId } : Props) => {
 
 	return (
 		<div>
-			TODO attempt skip
+			{t('game.attempts.skipped')}
 		</div>
 	)
 }

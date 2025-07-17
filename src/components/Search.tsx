@@ -10,8 +10,8 @@ const FUSE_BASE_OPTIONS = {
 }
 
 const Search = () => {
+	const { i18n : { language }, t } = useTranslation()
 	const { allMusics, guessMusic } = useHeardleContext()
-	const { i18n } = useTranslation()
 
 	const [search, setSearch] = React.useState<string>()
 	const [selectedMusic, setSelectedMusic] = React.useState<MusicElement | undefined>()
@@ -24,8 +24,8 @@ const Search = () => {
 	const fuse = new Fuse(allMusics, {
 		...FUSE_BASE_OPTIONS,
 		keys: [
-			`name.${i18n.language}`,
-			`category.${i18n.language}`
+			`name.${language}`,
+			`category.${language}`
 		]
 	})
 
@@ -40,21 +40,25 @@ const Search = () => {
 			key={music.id}
 			onClick={() => {
 					setSelectedMusic(music)
-					setSearch(music.name[i18n.language])
+					setSearch(music.name[language])
 				}
 			}
 		>
-			{music.name[i18n.language]} - {music.category[i18n.language]}
+			{music.name[language]} - {music.category[language]}
 		</div>
 	)
 
 	return (
 		<div>
-			TODO rendre l'input autocomplete
-			<input onChange={handleChange} onFocus={console.log} value={search}/>
+			<input
+				onChange={handleChange}
+				onFocus={console.log}
+				value={search}
+				placeholder={t('game.search.placeholder')}
+			/>
 			{search && getSearchResults().map(buildResultOption)}
-			<button onClick={() => guessMusic(undefined)}>skip</button>
-			<button onClick={() => guessMusic(selectedMusic?.id)} disabled={!selectedMusic}>guess</button>
+			<button onClick={() => guessMusic(undefined)}>{t('game.search.skip')}</button>
+			<button onClick={() => guessMusic(selectedMusic?.id)} disabled={!selectedMusic}>{t('game.search.submit')}</button>
 		</div>
 	)
 }
