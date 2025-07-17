@@ -8,7 +8,7 @@ type Props = {
 }
 
 const AudioPlayer = ({ isFinished }: Props) => {
-	const { currentMusic } = useHeardleContext()
+	const { currentMusic, gameState } = useHeardleContext()
 
 	const [showHelp, setShowHelp] = React.useState<boolean>(true)
 	const [isScReady, setIsScReady] = React.useState<boolean>(false)
@@ -78,6 +78,14 @@ const AudioPlayer = ({ isFinished }: Props) => {
 		}
 	}
 
+	const currentMax = isFinished ? soundDuration : HEARDLE_SPLITS[gameState.attempts.length] * 1000
+
+	React.useEffect(() => {
+		if (!isFinished && soundPosition > currentMax) {
+			stopMusic()
+		} 
+	}, [soundPosition, currentMax])
+
 	return (
 		<>
 			<iframe // TODO hide
@@ -92,6 +100,7 @@ const AudioPlayer = ({ isFinished }: Props) => {
 					<ProgressBar
 						progress={soundPosition}
 						splits={isFinished ? [soundDuration] : HEARDLE_SPLITS.map(s => s * 1000)}
+						currentMax={currentMax}
 					/>
 					<button onClick={toggleMusic}>play</button>
 				</div>

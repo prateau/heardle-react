@@ -2,21 +2,27 @@ import * as React from 'react'
 
 type Bar = {
 	start: number,
+	end: number,
 	duration: number
 }
 
 type Props = {
 	progress: number,
-	splits: number[]
+	splits: number[],
+	currentMax: number
 }
 
-const ProgressBar = ({ progress, splits }: Props) => {
+const ProgressBar = ({ progress, splits, currentMax }: Props) => {
 
 	const bars = React.useMemo((): Bar[] => {
 		let min = 0
 		const result: Bar[] = []
 		splits.forEach(split => {
-			result.push({ start: min, duration: split - min })
+			result.push({
+				start: min,
+				duration: split - min,
+				end: split
+			})
 			min = split
 		})
 		return result
