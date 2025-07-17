@@ -1,5 +1,7 @@
 import * as React from 'react'
-import { useHeardleContext } from '../context/HeardleContext.tsx'
+import { useHeardleContext } from '../../context/HeardleContext.tsx'
+import ProgressBar from './ProgressBar.tsx'
+import { HEARDLE_SPLITS } from '../../config/consts.ts'
 
 type Props = {
 	isFinished?: boolean
@@ -87,7 +89,10 @@ const AudioPlayer = ({ isFinished }: Props) => {
 			{isScReady ? (
 				<div>
 					{!isFinished && showHelp && <div>TODO Help</div>}
-					{soundPosition} / {soundDuration}
+					<ProgressBar
+						progress={soundPosition}
+						splits={isFinished ? [soundDuration] : HEARDLE_SPLITS.map(s => s * 1000)}
+					/>
 					<button onClick={toggleMusic}>play</button>
 				</div>
 			) : (
