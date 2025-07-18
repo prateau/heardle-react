@@ -1,9 +1,9 @@
 .attempt {
     display: flex;
     align-items: center;
-    height: 40px;
-    padding-left: 8px;
-    padding-right: 8px;
+    gap: 8px;
+    min-height: 40px;
+    padding: 8px;
     border: 1px solid #444444;
 }
 
@@ -15,4 +15,14 @@
     font-weight: 600;
     letter-spacing: 2px;
     color: #444444;
+}
+
+.icon {
+    flex-shrink: 0;
+    height: 24px;
+    width: 24px;
+}
+
+.attempt--guessed .icon {
+    color: #ff0000
 }
