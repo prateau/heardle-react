@@ -1,6 +1,7 @@
 # 🚧 WIP
 
 - node 22
+- TODO change state name
 
 # React + TypeScript + Vite
 
