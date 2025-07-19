@@ -1,0 +1,56 @@
+.progress-bar-line {
+    height: 13px;
+    width: 100%;
+    border-top: 1px solid #888888;
+    border-bottom: 1px solid #888888;
+}
+
+.progress-bar-container {
+    display: flex;
+
+    width: 100%;
+    max-width: 700px;
+    height: 100%;
+    margin: auto;
+    padding-right: 16px;
+    padding-left: 16px;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0;
+
+    border-top: none;
+    border-bottom: none;
+    background: #121212;
+}
+
+.progress-bar::-webkit-progress-bar {
+  background-color: #121212;
+}
+
+.progress-bar::-webkit-progress-inner-element {
+  border-right: 1px solid #888888;
+  border-left: 1px solid #888888;
+}
+
+.progress-bar::-moz-progress-bar {
+  background-color: #1d7e05;
+}
+
+.progress-bar::-webkit-progress-value {
+  background-color: #1d7e05;
+}
+
+.progress-bar.progress-bar--unlocked {
+    background: #444444;
+    border-color: #121212;
+}
+
+.progress-bar.progress-bar--unlocked::-webkit-progress-bar {
+  background-color: #444444;
+}
+
+.progress-bar.progress-bar--unlocked::-webkit-progress-inner-element {
+  border-color: #121212;
+}

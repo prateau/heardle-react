@@ -19,7 +19,7 @@ const Attempt = ({ musicId } : Props) => {
 
 	if (selectedMusic) {
 		return <div className={classNames('attempt', 'attempt--guessed')}>
-			<Cross className="icon" />
+			<Cross className='icon' />
 			{selectedMusic.name[language]} - {selectedMusic.category[language]}
 		</div>
 	}

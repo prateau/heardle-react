@@ -1,0 +1,36 @@
+.soundcloud-iframe {
+    display: none;
+}
+
+.player-help {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+
+    margin: auto;
+    width: fit-content;
+
+    color: #888888;
+    font-size: 14px;
+}
+
+.play-button-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 100%;
+    max-width: 700px;
+    margin: auto;
+    padding-right: 16px;
+    padding-left: 16px;
+}
+
+.player-loading {
+    margin: auto;
+    width: fit-content;
+
+    color: #888888;
+    font-size: 14px;
+}

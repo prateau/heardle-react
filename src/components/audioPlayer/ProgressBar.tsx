@@ -1,4 +1,6 @@
 import * as React from 'react'
+import './ProgressBar.css'
+import classNames from 'classnames'
 
 type Bar = {
 	start: number,
@@ -29,15 +31,18 @@ const ProgressBar = ({ progress, splits, currentMax }: Props) => {
 	}, [splits])
 
 	return (
-		<div>
-			{bars.map(bar => (
-				<progress
-					key={bar.start}
-					max={bar.duration}
-					value={progress - bar.start}
-					style={{ flex: bar.duration }}
-				/>
-			))}
+		<div className='progress-bar-line'>
+			<div className='progress-bar-container'>
+				{bars.map(bar => (
+					<progress
+						className={classNames('progress-bar', { ['progress-bar--unlocked']: currentMax >= bar.end })}
+						key={bar.start}
+						max={bar.duration}
+						value={progress - bar.start}
+						style={{ flexGrow: bar.duration }}
+					/>
+				))}
+			</div>
 		</div>
 	)
 }

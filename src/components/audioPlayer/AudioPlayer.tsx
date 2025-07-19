@@ -1,8 +1,12 @@
 import * as React from 'react'
+import { useTranslation } from 'react-i18next'
+import './AudioPlayer.css'
 import { useHeardleContext } from '../../context/HeardleContext.tsx'
 import ProgressBar from './ProgressBar.tsx'
 import { HEARDLE_SPLITS } from '../../config/consts.ts'
-import { useTranslation } from 'react-i18next'
+import ArrowDown from '../../img/arrowDown.svg?react'
+import PlayButton from './PlayButton.tsx'
+import { toTimeString } from '../../config/utils.ts'
 
 type Props = {
 	isFinished?: boolean
@@ -79,15 +83,8 @@ const AudioPlayer = ({ isFinished }: Props) => {
 		scWidget.seekTo(0)
 	}
 
-	const toggleMusic = () => {
-		if (isPlaying) {
-			stopMusic()
-		} else {
-			startMusic()
-		}
-	}
-
 	const currentMax = isFinished ? soundDuration : HEARDLE_SPLITS[gameState.attempts.length] * 1000
+	const songMax = isFinished ? soundDuration : HEARDLE_SPLITS[HEARDLE_SPLITS.length - 1] * 1000
 
 	React.useEffect(() => {
 		if (!isFinished && soundPosition > currentMax) {
@@ -97,27 +94,41 @@ const AudioPlayer = ({ isFinished }: Props) => {
 
 	return (
 		<>
-			<iframe // TODO hide
+			<iframe
 				name={`${currentMusic.id}`}
 				ref={scIframe}
 				allow="autoplay"
 				src={`https://w.soundcloud.com/player/?url=${currentMusic.url}`}
+				className='soundcloud-iframe'
 			/>
 			{hasError ? (
-				<div>{t('game.player.error')}</div>
+				<div className='player-loading'>{t('game.player.error')}</div>
 			) : (
 				isScReady ? (
-					<div>
-						{!isFinished && showHelp && <div>{t('game.help')}</div>}
+					<>
+						{!isFinished && showHelp && (
+							<div className='player-help'>
+								<p>{t('game.help')}</p>
+								<ArrowDown />
+							</div>
+						)}
 						<ProgressBar
 							progress={soundPosition}
 							splits={isFinished ? [soundDuration] : HEARDLE_SPLITS.map(s => s * 1000)}
 							currentMax={currentMax}
 						/>
-						<button onClick={toggleMusic}>play</button>
-					</div>
+						<div className='play-button-line'>
+							{toTimeString(soundPosition)}
+							<PlayButton
+								startMusic={startMusic}
+								stopMusic={stopMusic}
+								isPlaying={isPlaying}
+							/>
+							{toTimeString(songMax)}
+						</div>
+					</>
 				) : (
-					<div>{t('game.player.loading')}</div>
+					<div className='player-loading'>{t('game.player.loading')}</div>
 				)
 			)}
 		</>

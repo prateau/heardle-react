@@ -20,3 +20,10 @@ export const saveGameState = (gameState: GameState) => {
     const oldState = getGameState().filter(state => state.date !== gameState.date)
     window.localStorage.setItem(LocalStorageKeys.GAME_STATE, JSON.stringify([...oldState, gameState]))
 }
+
+export const toTimeString = (ms: number) => {
+    const date = new Date(ms)
+    const padStartNumber = (n: number) => n.toString().padStart(2, '0')
+
+    return `${padStartNumber(date.getMinutes())}:${padStartNumber(date.getSeconds())}`
+}
