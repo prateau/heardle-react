@@ -22,8 +22,9 @@
 }
 
 .play-button-line {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr 10fr 1fr 10fr 1fr;
+    gap: 20px;
     align-items: center;
 
     width: 100%;
@@ -41,4 +42,29 @@
 
     color: #888888;
     font-size: 0.875rem;
+}
+
+.volume-slider {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+}
+
+.volume-slider-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    color: #888888
+}
+
+@media (max-width: 400px) {
+    .volume-slider-icon {
+        display: none;
+    }
+}
+
+.volume-slider-input {
+    accent-color : #3d9e25;
+    width: 100%;
 }

@@ -7,6 +7,7 @@ import { HEARDLE_SPLITS } from '../../config/consts.ts'
 import ArrowDownIcon from '../../img/arrowDown.svg?react'
 import PlayButton from './PlayButton.tsx'
 import { toTimeString } from '../../config/utils.ts'
+import SoundIcon from '../../img/sound.svg?react'
 
 type Props = {
 	isFinished?: boolean
@@ -68,6 +69,7 @@ const AudioPlayer = ({ isFinished }: Props) => {
 			scWidget.getCurrentSound((sound: any) => {
 				setMusicImage(sound.artwork_url)
 			})
+			scWidget.setVolume(50)
 		}
 	}, [isScReady])
 
@@ -85,6 +87,12 @@ const AudioPlayer = ({ isFinished }: Props) => {
 		setIsPlaying(false)
 		scWidget.pause()
 		scWidget.seekTo(0)
+	}
+
+	const changeVolume = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const scWidget = window.SC.Widget(scIframe.current)
+
+		scWidget.setVolume(event.target.value)
 	}
 
 	const currentMax = isFinished ? soundDuration : HEARDLE_SPLITS[gameState.attempts.length] * 1000
@@ -123,11 +131,16 @@ const AudioPlayer = ({ isFinished }: Props) => {
 						/>
 						<div className='play-button-line'>
 							{toTimeString(soundPosition)}
+							<div className='volume-slider'>
+								<SoundIcon className='volume-slider-icon' />
+								<input className='volume-slider-input' type='range' min={0} max={100} onChange={changeVolume} />
+							</div>
 							<PlayButton
 								startMusic={startMusic}
 								stopMusic={stopMusic}
 								isPlaying={isPlaying}
 							/>
+							<div />
 							{toTimeString(songMax)}
 						</div>
 					</>
