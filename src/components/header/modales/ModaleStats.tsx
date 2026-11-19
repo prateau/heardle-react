@@ -1,15 +1,16 @@
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
 import './ModaleStats.css'
-import Modale from '../commons/Modale.tsx'
-import StatsIcon from '../../img/stats.svg?react'
-import type { GameState } from '../../config/types.ts'
-import { getGameStateWithoutCurrent, isGameFinished } from '../../config/utils.ts'
-import { useHeardleContext } from '../../context/HeardleContext.tsx'
-import { HEARDLE_SPLITS } from '../../config/consts.ts'
+import Modale from '../../commons/Modale.tsx'
+import StatsIcon from '../../../img/stats.svg?react'
+import type { GameState } from '../../../config/types.ts'
+import { getGameStateWithoutCurrent, isGameFinished } from '../../../config/utils.ts'
+import { useHeardleContext } from '../../../context/HeardleContext.tsx'
+import { HEARDLE_SPLITS } from '../../../config/consts.ts'
 import { Bar } from 'react-chartjs-2'
-import Button, { Variant } from '../commons/Button.tsx'
+import Button, { Variant } from '../../commons/Button.tsx'
 import ModaleHistory from './ModaleHistory.tsx'
+import HeaderButton from '../HeaderButton.tsx'
 
 type Streak = {
 	lastId: number,
@@ -142,9 +143,7 @@ const ModaleStatsWrapper = () => {
 	const [isOpen, setIsOpen] = React.useState(false)
 
 	return (<>
-		<button className='header-icon-container' onClick={() => setIsOpen(true)}>
-			<StatsIcon className='header-icon' />
-		</button>
+		<HeaderButton onClick={() => setIsOpen(true)} Icon={StatsIcon} />
 		{isOpen && <ModaleStats closeModale={() => setIsOpen(false)} />}
 	</>)
 }

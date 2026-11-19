@@ -1,14 +1,15 @@
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
 import './ModaleHelp.css'
-import Modale from '../commons/Modale.tsx'
-import QuestionIcon from '../../img/question.svg?react'
-import MusicIcon from '../../img/music.svg?react'
-import SoundIcon from '../../img/sound.svg?react'
-import ThumbIcon from '../../img/thumb.svg?react'
-import ListIcon from '../../img/list.svg?react'
-import Button, { Variant } from '../commons/Button.tsx'
-import { getShowHelp, setShowHelp } from '../../config/utils.ts'
+import Modale from '../../commons/Modale.tsx'
+import QuestionIcon from '../../../img/question.svg?react'
+import MusicIcon from '../../../img/music.svg?react'
+import SoundIcon from '../../../img/sound.svg?react'
+import ThumbIcon from '../../../img/thumb.svg?react'
+import ListIcon from '../../../img/list.svg?react'
+import Button, { Variant } from '../../commons/Button.tsx'
+import { getShowHelp, setShowHelp } from '../../../config/utils.ts'
+import HeaderButton from '../HeaderButton.tsx'
 
 type Props = {
 	closeModale: () => void
@@ -61,9 +62,7 @@ const ModaleHelpWrapper = () => {
 	}
 
 	return (<>
-		<button className='header-icon-container' onClick={() => setIsOpen(true)}>
-            <QuestionIcon className='header-icon' />
-		</button>
+		<HeaderButton onClick={() => setIsOpen(true)} Icon={QuestionIcon} />
 		{isOpen && <ModaleHelp closeModale={closeModale} />}
 	</>)
 }

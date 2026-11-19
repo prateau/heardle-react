@@ -1,10 +1,11 @@
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
 import './ModaleLanguage.css'
-import { Locales } from '../../config/i18n/i18n.ts'
-import Modale from '../commons/Modale.tsx'
-import FlagFrIcon from '../../img/flagFr.svg?react'
-import FlagGbIcon from '../../img/flagGb.svg?react'
+import { Locales } from '../../../config/i18n/i18n.ts'
+import Modale from '../../commons/Modale.tsx'
+import FlagFrIcon from '../../../img/flagFr.svg?react'
+import FlagGbIcon from '../../../img/flagGb.svg?react'
+import HeaderButton from '../HeaderButton.tsx'
 
 const getLocaleFlag = (locale: Locales): React.FunctionComponent<React.SVGProps<SVGSVGElement>> => {
 	switch (locale) {
@@ -51,9 +52,7 @@ const ModaleLanguageWrapper = () => {
 	const Flag = getLocaleFlag(language as Locales)
 
 	return (<>
-		<button className='header-icon-container' onClick={() => setIsOpen(true)}>
-			<Flag className='header-icon' />
-		</button>
+		<HeaderButton onClick={() => setIsOpen(true)} Icon={Flag} />
 		{isOpen && <ModaleLanguage closeModale={() => setIsOpen(false)} />}
 	</>)
 }

@@ -1,9 +1,10 @@
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
 import './ModaleList.css'
-import Modale from '../commons/Modale.tsx'
-import ListIcon from '../../img/list.svg?react'
-import { ALL_CATEGORIES, ALL_MUSICS } from '../../config/consts.ts'
+import Modale from '../../commons/Modale.tsx'
+import ListIcon from '../../../img/list.svg?react'
+import { ALL_CATEGORIES, ALL_MUSICS } from '../../../config/consts.ts'
+import HeaderButton from '../HeaderButton.tsx'
 
 type Props = {
 	closeModale: () => void
@@ -40,9 +41,7 @@ const ModaleListWrapper = () => {
 	const [isOpen, setIsOpen] = React.useState(false)
 
 	return (<>
-		<button className='header-icon-container' onClick={() => setIsOpen(true)}>
-            <ListIcon className='header-icon' />
-		</button>
+		<HeaderButton onClick={() => setIsOpen(true)} Icon={ListIcon} />
 		{isOpen && <ModaleList closeModale={() => setIsOpen(false)} />}
 	</>)
 }

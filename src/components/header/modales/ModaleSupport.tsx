@@ -1,8 +1,9 @@
 import * as React from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import './ModaleSupport.css'
-import Modale from '../commons/Modale.tsx'
-import HeartIcon from '../../img/heart.svg?react'
+import Modale from '../../commons/Modale.tsx'
+import HeartIcon from '../../../img/heart.svg?react'
+import HeaderButton from '../HeaderButton.tsx'
 
 type Props = {
 	closeModale: () => void
@@ -30,9 +31,7 @@ const ModaleSupportWrapper = () => {
 	const [isOpen, setIsOpen] = React.useState(false)
 
 	return (<>
-		<button className='header-icon-container' onClick={() => setIsOpen(true)}>
-			<HeartIcon className='header-icon' />
-		</button>
+		<HeaderButton onClick={() => setIsOpen(true)} Icon={HeartIcon} />
 		{isOpen && <ModaleSupport closeModale={() => setIsOpen(false)} />}
 	</>)
 }
