@@ -63,6 +63,7 @@ const Search = () => {
 	const onSubmit = () => {
 		if (selectedMusic) {
 			guessMusic(selectedMusic.id)
+			resetInput()
 		} else {
 			inputRef.current?.focus()
 		}
