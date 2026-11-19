@@ -9,6 +9,12 @@ export const getTodayId = (): number => {
     return Math.trunc(diffInMilliseconds / (1000 * 60 * 60 * 24))
 }
 
+export const getDateFromId = (id: number) => {
+    const startDate = new Date(START_DATE)
+    const idDateMilliseconds = startDate.getTime() + id * 1000 * 60 * 60 * 24
+    return new Date(idDateMilliseconds)
+}
+
 export const getInfiniteId = (): number => {
     const state = getGameState(true)
 
@@ -34,6 +40,12 @@ export const setShowHelp = (showHelp: boolean) => {
 
 export const getGameState = (infinite: boolean): GameState[] => {
     return JSON.parse(window.localStorage.getItem(infinite ? LocalStorageKeys.GAME_STATE_INFINITE : LocalStorageKeys.GAME_STATE) || '[]')
+}
+
+export const getGameStateWithoutCurrent = (infinite: boolean, currentState: GameState): GameState[] => {
+    const gameState = getGameState(infinite)
+    const isTodayFinished = isGameFinished(currentState)
+    return isTodayFinished ? gameState : gameState.filter(state => state.dateId !== currentState.dateId)
 }
 
 export const getGameStateDay = (infinite: boolean, dateId: number): GameState | undefined => {

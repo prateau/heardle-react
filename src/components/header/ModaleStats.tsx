@@ -4,10 +4,12 @@ import './ModaleStats.css'
 import Modale from '../commons/Modale.tsx'
 import StatsIcon from '../../img/stats.svg?react'
 import type { GameState } from '../../config/types.ts'
-import { getGameState, isGameFinished } from '../../config/utils.ts'
+import { getGameStateWithoutCurrent, isGameFinished } from '../../config/utils.ts'
 import { useHeardleContext } from '../../context/HeardleContext.tsx'
 import { HEARDLE_SPLITS } from '../../config/consts.ts'
 import { Bar } from 'react-chartjs-2'
+import Button, { Variant } from '../commons/Button.tsx'
+import ModaleHistory from './ModaleHistory.tsx'
 
 type Streak = {
 	lastId: number,
@@ -50,28 +52,27 @@ const ModaleStats = () => {
 	const { gameState, isInfinite } = useHeardleContext()
 
 	const [isOpen, setIsOpen] = React.useState(false)
+	const [isHistoryOpen, setIsHistoryOpen] = React.useState(false)
 	const [gameHistory, setGameHistory] = React.useState<GameState[]>([])
 
 	React.useEffect(() => {
-		setGameHistory(getGameState(isInfinite))
-	}, [isInfinite, isOpen])
+		setGameHistory(getGameStateWithoutCurrent(isInfinite, gameState))
+	}, [isInfinite, gameState])
 
 	const isTodayFinished = isGameFinished(gameState)
 
-	const currentHistory = isTodayFinished ? gameHistory : gameHistory.filter(state => state.dateId !== gameState.dateId)
+	const gamePlayed = gameHistory.length
+	const gameWon = gameHistory.filter(state => state.attempts.includes(state.response)).length
+	const winRate = gameHistory.length > 0 ? Math.round((gameWon / gamePlayed) * 100) : 0
 
-	const gamePlayed = currentHistory.length
-	const gameWon = currentHistory.filter(state => state.attempts.includes(state.response)).length
-	const winRate = currentHistory.length > 0 ? Math.round((gameWon / gamePlayed) * 100) : 0
-
-	const allStreaks = getStreaks(currentHistory)
+	const allStreaks = getStreaks(gameHistory)
 	const currentStreak = allStreaks.find(streak => streak.lastId === (isTodayFinished ? gameState.dateId : gameState.dateId - 1))?.length || 0
 	const maxStreak = Math.max(0, ...allStreaks.map(streak => streak.length))
 
 	const data = {
 		labels: [...Array.from({ length: HEARDLE_SPLITS.length }, (_, i) => i + 1), 'X'],
 		datasets: [{
-			data: getDataFromHistory(currentHistory),
+			data: getDataFromHistory(gameHistory),
 			backgroundColor: [...Array(HEARDLE_SPLITS.length).fill('#1d7e05'), '#ff0000']
 		}]
 	}
@@ -127,6 +128,12 @@ const ModaleStats = () => {
 						{t('header.stats.maxStreak')}
 					</div>
 				</div>
+				<Button
+					label={t(isInfinite ? 'header.stats.historyButtonInfinite' : 'header.stats.historyButton')}
+					variant={Variant.Primary}
+					onClick={() => setIsHistoryOpen(true)}
+				/>
+				<ModaleHistory isOpen={isHistoryOpen} setIsOpen={setIsHistoryOpen} />
 			</div>
 		</Modale>
 	</>)

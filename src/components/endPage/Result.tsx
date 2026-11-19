@@ -1,11 +1,11 @@
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
-import classNames from 'classnames'
 import './Result.css'
 import { useHeardleContext } from '../../context/HeardleContext'
 import { HEARDLE_SPLITS } from '../../config/consts'
 import Button, { Variant } from '../commons/Button'
 import { isGameWon } from '../../config/utils'
+import AttemptSummary from '../commons/AttemptSummary'
 
 const COPIED_MESSAGE_TIMEOUT = 2000
 
@@ -16,20 +16,6 @@ const Result = () => {
 	const [showCopied, setShowCopied] = React.useState(false)
 
 	const isWon = isGameWon(gameState)
-
-	const getRecapClassname = (index: number): string => {
-		if (index > gameState.attempts.length - 1) {
-			return 'recap-block--empty'
-		}
-		const guess = gameState.attempts[index]
-		if (guess === currentMusic.id) {
-			return 'recap-block--win'
-		}
-		if (guess == null) {
-			return 'recap-block--skip'
-		}
-		return 'recap-block--fail'
-	}
 
 	const getRecapEmoji = (index: number): string => {
 		if (index > gameState.attempts.length - 1) {
@@ -67,11 +53,7 @@ const Result = () => {
 	return (
 		<div className='share-block'>
 			<p className='score'>{isWon ? gameState.attempts.length : 0}</p>
-			<div className='recap-container'>
-				{HEARDLE_SPLITS.map((_, index) => (
-					<div className={classNames('recap-block', getRecapClassname(index))} />
-				))}
-			</div>
+			<AttemptSummary gameState={gameState} />
 			{isInfinite ? (<>
 				<p className='recap-phrase'>{isWon ? t('endPage.infinite.win', { count: HEARDLE_SPLITS[gameState.attempts.length - 1] }) : t('endPage.infinite.lose')}</p>
 				<Button

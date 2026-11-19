@@ -26,7 +26,10 @@
       "won": "Parties gagnée",
       "winRate": "Taux de réussite",
       "currentStreak": "Série actuelle",
-      "maxStreak": "Série maximum"
+      "maxStreak": "Série maximum",
+      "history": "Historique",
+      "historyButton": "Historique des 30 derniers jours",
+      "historyButtonInfinite": "Historique des 30 dernières parties"
     },
     "list": {
       "title": "Liste des musiques"

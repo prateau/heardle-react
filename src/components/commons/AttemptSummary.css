@@ -1,0 +1,25 @@
+.attempt-sumary-container {
+    display: flex;
+    gap: 4px;
+}
+
+.attempt-sumary {
+    height: 4px;
+    width: 16px;
+}
+
+.attempt-sumary--fail {
+    background: #ff0000;
+}
+
+.attempt-sumary--skip {
+    background: #444444;
+}
+
+.attempt-sumary--win {
+    background: #1d7e05;
+}
+
+.attempt-sumary--empty {
+    background: #ffffff;
+}

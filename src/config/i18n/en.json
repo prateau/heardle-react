@@ -26,7 +26,10 @@
       "won": "Times won",
       "winRate": "Win rate",
       "currentStreak": "Current streak",
-      "maxStreak": "Max streak"
+      "maxStreak": "Max streak",
+      "history": "History",
+      "historyButton": "History for the last 30 days",
+      "historyButtonInfinite": "History for the last 30 games"
     },
     "list": {
       "title": "Music list"
