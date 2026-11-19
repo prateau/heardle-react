@@ -4,19 +4,17 @@ import './ModaleSupport.css'
 import Modale from '../commons/Modale.tsx'
 import HeartIcon from '../../img/heart.svg?react'
 
-const ModaleSupport = () => {
+type Props = {
+	closeModale: () => void
+}
+
+const ModaleSupport = ({ closeModale }: Props) => {
 	const { t } = useTranslation()
 
-	const [isOpen, setIsOpen] = React.useState(false)
-
-	return (<>
-		<button className='header-icon-container' onClick={() => setIsOpen(true)}>
-			<HeartIcon className='header-icon' />
-		</button>
+	return (
 		<Modale
 			title={t('header.about.title')}
-			isOpen={isOpen}
-			onClose={() => setIsOpen(false)}
+			onClose={closeModale}
 		>
 			<div className='header-about-text'>
 				<Trans
@@ -25,7 +23,18 @@ const ModaleSupport = () => {
 				/>
 			</div>
 		</Modale>
+	)
+}
+
+const ModaleSupportWrapper = () => {
+	const [isOpen, setIsOpen] = React.useState(false)
+
+	return (<>
+		<button className='header-icon-container' onClick={() => setIsOpen(true)}>
+			<HeartIcon className='header-icon' />
+		</button>
+		{isOpen && <ModaleSupport closeModale={() => setIsOpen(false)} />}
 	</>)
 }
 
-export default ModaleSupport
+export default ModaleSupportWrapper

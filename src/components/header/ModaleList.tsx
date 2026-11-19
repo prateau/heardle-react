@@ -5,19 +5,17 @@ import Modale from '../commons/Modale.tsx'
 import ListIcon from '../../img/list.svg?react'
 import { ALL_CATEGORIES, ALL_MUSICS } from '../../config/consts.ts'
 
-const ModaleList = () => {
+type Props = {
+	closeModale: () => void
+}
+
+const ModaleList = ({ closeModale }: Props) => {
 	const { i18n : { language }, t } = useTranslation()
 
-	const [isOpen, setIsOpen] = React.useState(false)
-
-	return (<>
-		<button className='header-icon-container' onClick={() => setIsOpen(true)}>
-            <ListIcon className='header-icon' />
-		</button>
+	return (
 		<Modale
 			title={t('header.list.title')}
-			isOpen={isOpen}
-			onClose={() => setIsOpen(false)}
+			onClose={closeModale}
 		>
 			{ALL_CATEGORIES.map((category) => (
 				<>
@@ -35,7 +33,18 @@ const ModaleList = () => {
 				</>
 			))}
 		</Modale>
+	)
+}
+
+const ModaleListWrapper = () => {
+	const [isOpen, setIsOpen] = React.useState(false)
+
+	return (<>
+		<button className='header-icon-container' onClick={() => setIsOpen(true)}>
+            <ListIcon className='header-icon' />
+		</button>
+		{isOpen && <ModaleList closeModale={() => setIsOpen(false)} />}
 	</>)
 }
 
-export default ModaleList
+export default ModaleListWrapper

@@ -4,19 +4,17 @@ import './ModaleInfo.css'
 import Modale from '../commons/Modale.tsx'
 import InfoIcon from '../../img/info.svg?react'
 
-const ModaleInfos = () => {
+type Props = {
+	closeModale: () => void
+}
+
+const ModaleInfos = ({ closeModale }: Props) => {
 	const { t } = useTranslation()
 
-	const [isOpen, setIsOpen] = React.useState(false)
-
-	return (<>
-		<button className='header-icon-container' onClick={() => setIsOpen(true)}>
-			<InfoIcon className='header-icon' />
-		</button>
+	return (
 		<Modale
 			title={t('header.infos.title')}
-			isOpen={isOpen}
-			onClose={() => setIsOpen(false)}
+			onClose={closeModale}
 		>
 			<div className='header-infos-text'>
 				<Trans
@@ -31,7 +29,18 @@ const ModaleInfos = () => {
 				/>
 			</p>
 		</Modale>
+	)
+}
+
+const ModaleInfosWrapper = () => {
+	const [isOpen, setIsOpen] = React.useState(false)
+
+	return (<>
+		<button className='header-icon-container' onClick={() => setIsOpen(true)}>
+			<InfoIcon className='header-icon' />
+		</button>
+		{isOpen && <ModaleInfos closeModale={() => setIsOpen(false)} />}
 	</>)
 }
 
-export default ModaleInfos
+export default ModaleInfosWrapper

@@ -29,11 +29,10 @@ const getFilledHistory = (gameHistory: GameState[], gameState: GameState): GameS
 }
 
 type Props = {
-	isOpen: boolean,
 	setIsOpen: (isOpen: boolean) => void
 }
 
-const ModaleHistory = ({ isOpen, setIsOpen }: Props) => {
+const ModaleHistory = ({ setIsOpen }: Props) => {
 	const { i18n : { language }, t } = useTranslation()
 	const { gameState, isInfinite } = useHeardleContext()
 
@@ -57,7 +56,6 @@ const ModaleHistory = ({ isOpen, setIsOpen }: Props) => {
 	return (
 		<Modale
 			title={t('header.stats.history')}
-			isOpen={isOpen}
 			onClose={() => setIsOpen(false)}
 		>
 			<div className={classNames('history', { 'history--infinite': isInfinite })}>

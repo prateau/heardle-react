@@ -10,9 +10,44 @@ import ListIcon from '../../img/list.svg?react'
 import Button, { Variant } from '../commons/Button.tsx'
 import { getShowHelp, setShowHelp } from '../../config/utils.ts'
 
-const ModaleHelp = () => {
+type Props = {
+	closeModale: () => void
+}
+
+const ModaleHelp = ({ closeModale }: Props) => {
 	const { t } = useTranslation()
 
+	return (
+		<Modale
+			title={t('header.help.title')}
+			onClose={closeModale}
+		>
+			<div className='header-help-container'>
+				<div className='header-help-item'>
+					<MusicIcon className='header-help-item-icon' />
+					<p>{t('header.help.listen')}</p>
+				</div>
+				<div className='header-help-item'>
+					<SoundIcon className='header-help-item-icon' />
+					<p>{t('header.help.progress')}</p>
+				</div>
+				<div className='header-help-item'>
+					<ThumbIcon className='header-help-item-icon' />
+					<p>{t('header.help.win')}</p>
+				</div>
+				<div className='header-help-item'>
+					<ListIcon className='header-help-item-icon' />
+					<p>{t('header.help.list')}</p>
+				</div>
+				<div className='header-help-button'>
+					<Button label={t('header.help.play')} variant={Variant.Primary} onClick={closeModale} />
+				</div>
+			</div>
+		</Modale>
+	)
+}
+
+const ModaleHelpWrapper = () => {
 	const [isOpen, setIsOpen] = React.useState(false)
 
 	React.useEffect(() => {
@@ -29,34 +64,8 @@ const ModaleHelp = () => {
 		<button className='header-icon-container' onClick={() => setIsOpen(true)}>
             <QuestionIcon className='header-icon' />
 		</button>
-		<Modale
-			title={t('header.help.title')}
-			isOpen={isOpen}
-			onClose={closeModale}
-		>
-            <div className='header-help-container'>
-		        <div className='header-help-item'>
-                    <MusicIcon className='header-help-item-icon' />
-					<p>{t('header.help.listen')}</p>
-                </div>
-		        <div className='header-help-item'>
-                    <SoundIcon className='header-help-item-icon' />
-					<p>{t('header.help.progress')}</p>
-                </div>
-		        <div className='header-help-item'>
-                    <ThumbIcon className='header-help-item-icon' />
-					<p>{t('header.help.win')}</p>
-                </div>
-		        <div className='header-help-item'>
-                    <ListIcon className='header-help-item-icon' />
-					<p>{t('header.help.list')}</p>
-                </div>
-				<div className='header-help-button'>
-					<Button label={t('header.help.play')} variant={Variant.Primary} onClick={closeModale} />
-				</div>
-            </div>
-		</Modale>
+		{isOpen && <ModaleHelp closeModale={closeModale} />}
 	</>)
 }
 
-export default ModaleHelp
+export default ModaleHelpWrapper

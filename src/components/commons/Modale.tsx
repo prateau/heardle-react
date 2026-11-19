@@ -5,15 +5,10 @@ import CrossIcon from '../../img/cross.svg?react'
 
 type Props = {
     title: string,
-    isOpen: boolean,
     onClose: () => void
 }
 
-const Modale = ({ title, isOpen, onClose, children }: React.PropsWithChildren<Props>) => {
-    if (!isOpen) {
-        return null
-    }
-
+const Modale = ({ title, onClose, children }: React.PropsWithChildren<Props>) => {
     return createPortal(
         <div className='modale-overlay' onClick={onClose}>
             <div className='modale-container' onClick={e => e.stopPropagation()}>

@@ -17,21 +17,17 @@ const getLocaleFlag = (locale: Locales): React.FunctionComponent<React.SVGProps<
 	}
 }
 
-const ModaleLanguage = () => {
-	const { i18n : { changeLanguage, language }, t } = useTranslation()
+type Props = {
+	closeModale: () => void
+}
 
-	const [isOpen, setIsOpen] = React.useState(false)
-
-	const Flag = getLocaleFlag(language as Locales)
+const ModaleLanguage = ({ closeModale }: Props) => {
+	const { i18n : { changeLanguage }, t } = useTranslation()
 
 	return (<>
-		<button className='header-icon-container' onClick={() => setIsOpen(true)}>
-			<Flag className='header-icon' />
-		</button>
 		<Modale
 			title={t('header.language.title')}
-			isOpen={isOpen}
-			onClose={() => setIsOpen(false)}
+			onClose={closeModale}
 		>
             <div className='header-language-container'>
 				{Object.values(Locales).map((locale) => {
@@ -47,4 +43,19 @@ const ModaleLanguage = () => {
 	</>)
 }
 
-export default ModaleLanguage
+const ModaleLanguageWrapper = () => {
+	const { i18n : { language } } = useTranslation()
+
+	const [isOpen, setIsOpen] = React.useState(false)
+
+	const Flag = getLocaleFlag(language as Locales)
+
+	return (<>
+		<button className='header-icon-container' onClick={() => setIsOpen(true)}>
+			<Flag className='header-icon' />
+		</button>
+		{isOpen && <ModaleLanguage closeModale={() => setIsOpen(false)} />}
+	</>)
+}
+
+export default ModaleLanguageWrapper

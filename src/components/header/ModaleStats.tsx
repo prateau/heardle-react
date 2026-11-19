@@ -47,11 +47,14 @@ const getDataFromHistory = (history: GameState[]): number[] => (
 	}, Array(HEARDLE_SPLITS.length + 1).fill(0))
 )
 
-const ModaleStats = () => {
+type Props = {
+	closeModale: () => void
+}
+
+const ModaleStats = ({ closeModale }: Props) => {
 	const { t } = useTranslation()
 	const { gameState, isInfinite } = useHeardleContext()
 
-	const [isOpen, setIsOpen] = React.useState(false)
 	const [isHistoryOpen, setIsHistoryOpen] = React.useState(false)
 	const [gameHistory, setGameHistory] = React.useState<GameState[]>([])
 
@@ -77,14 +80,10 @@ const ModaleStats = () => {
 		}]
 	}
 
-	return (<>
-		<button className='header-icon-container' onClick={() => setIsOpen(true)}>
-			<StatsIcon className='header-icon' />
-		</button>
+	return (
 		<Modale
 			title={t('header.stats.title')}
-			isOpen={isOpen}
-			onClose={() => setIsOpen(false)}
+			onClose={closeModale}
 		>
 			<div className='header-stats-container'>
 				<Bar
@@ -133,10 +132,21 @@ const ModaleStats = () => {
 					variant={Variant.Primary}
 					onClick={() => setIsHistoryOpen(true)}
 				/>
-				<ModaleHistory isOpen={isHistoryOpen} setIsOpen={setIsHistoryOpen} />
+				{isHistoryOpen && <ModaleHistory setIsOpen={setIsHistoryOpen} />}
 			</div>
 		</Modale>
+	)
+}
+
+const ModaleStatsWrapper = () => {
+	const [isOpen, setIsOpen] = React.useState(false)
+
+	return (<>
+		<button className='header-icon-container' onClick={() => setIsOpen(true)}>
+			<StatsIcon className='header-icon' />
+		</button>
+		{isOpen && <ModaleStats closeModale={() => setIsOpen(false)} />}
 	</>)
 }
 
-export default ModaleStats
+export default ModaleStatsWrapper
